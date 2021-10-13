@@ -11,6 +11,7 @@ import com.gabea.mbaapi.model.enums.UserTypeEnum;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -44,6 +45,9 @@ public class User {
     private Instant createdAt;
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Payment> paymentList;
 
 
 }
