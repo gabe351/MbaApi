@@ -25,6 +25,7 @@ public class UserServiceTest {
 
     @Test
     public void findAllUsersSuccessfully() {
+
         List<User> expectedUserList = UserBuilder.buildUserList();
         Mockito.when(userRepository.findAll()).thenReturn(expectedUserList);
 
