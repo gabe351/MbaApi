@@ -1,6 +1,8 @@
 package com.gabea.mbaapi.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import com.gabea.mbaapi.model.enums.UserTypeEnum;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +50,46 @@ public class User {
     private Instant updatedAt;
 
     @OneToMany(mappedBy = "user")
-    private List<Payment> paymentList;
+    @JsonBackReference
+    private List<Payment> paymentList = new ArrayList<>();
 
+    public User(Integer id, String name, String email, String password, InstrumentEnum instrument, UserTypeEnum userType,
+                SituationEnum situation, boolean isActive, boolean isAssociated, Instant createdAt, Instant updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.instrument = instrument;
+        this.userType = userType;
+        this.situation = situation;
+        this.isActive = isActive;
+        this.isAssociated = isAssociated;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
+    public void addPayment(Payment payment) {
+        paymentList.add(payment);
+    }
+
+    public void removePayment(Payment payment) {
+        paymentList.remove(payment);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", instrument=" + instrument +
+                ", userType=" + userType +
+                ", situation=" + situation +
+                ", isActive=" + isActive +
+                ", isAssociated=" + isAssociated +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
