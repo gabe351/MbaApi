@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -25,19 +26,19 @@ public class UserServiceTest {
 
     @Test
     public void findAllUsersSuccessfully() {
-        List<User> expectedUserList = UserBuilder.buildUserList();
-        Mockito.when(userRepository.findAll()).thenReturn(expectedUserList);
+        Optional<List<User>> expectedUserList = Optional.of(UserBuilder.buildUserList());
+        Mockito.when(userRepository.findUsers(null)).thenReturn(expectedUserList);
 
-        List<User> actualUserList = userService.findAllUsers();
+        Optional<List<User>> actualUserList = userService.findUsers(null);
         Assertions.assertEquals(expectedUserList, actualUserList);
     }
 
     @Test
     public void findNoUsers() {
-        List<User> expectedUserList = Collections.emptyList();
-        Mockito.when(userRepository.findAll()).thenReturn(expectedUserList);
+        Optional<List<User>> expectedUserList = Optional.empty();
+        Mockito.when(userService.findUsers(null)).thenReturn(expectedUserList);
 
-        List<User> actualUserList = userService.findAllUsers();
+        Optional<List<User>> actualUserList = userService.findUsers(null);
         Assertions.assertEquals(expectedUserList, actualUserList);
     }
 

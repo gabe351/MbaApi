@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -17,5 +18,9 @@ public class UserService {
 
     public List<User> findAllUsers()  {
         return userRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    }
+
+    public Optional<List<User>> findUsers(Boolean isActive) {
+        return userRepository.findUsers(isActive);
     }
 }
