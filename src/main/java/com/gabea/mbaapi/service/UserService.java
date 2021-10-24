@@ -3,6 +3,7 @@ package com.gabea.mbaapi.service;
 import com.gabea.mbaapi.model.User;
 import com.gabea.mbaapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,6 @@ public class UserService {
     UserRepository userRepository;
 
     public List<User> findAllUsers()  {
-        return userRepository.findAll();
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 }
