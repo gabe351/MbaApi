@@ -8,21 +8,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> userList = userService.findAllUsers();
+    @GetMapping("/")
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam(value = "isActive", required = false) Boolean isActive) {
+        Optional<List<User>> userList = userService.findUsers(isActive);
         if (userList.isEmpty()) {
             throw new NoUsersFoundException("No Users were found");
         }
-        return ResponseEntity.ok(userList);
+        return ResponseEntity.ok(userList.get());
+
     }
 }

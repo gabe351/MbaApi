@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,21 +32,21 @@ public class UserControllerTest {
 
     @Test
     public void getAllUsersSuccessfully() throws Exception {
-        List<User> userList = UserBuilder.buildUserList();
+        Optional<List<User>> userList = Optional.of(UserBuilder.buildUserList());
 
-        Mockito.when(userService.findAllUsers()).thenReturn(userList);
+        Mockito.when(userService.findUsers(null)).thenReturn(userList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/users/")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getNoUsers() throws Exception {
-        List<User> userList = Collections.emptyList();
-        Mockito.when(userService.findAllUsers()).thenReturn(userList);
+        Optional<List<User>> userList = Optional.empty();
+        Mockito.when(userService.findUsers(null)).thenReturn(userList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/users/")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
