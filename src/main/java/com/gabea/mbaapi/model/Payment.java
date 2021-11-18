@@ -37,6 +37,5 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
     private User user;
 }

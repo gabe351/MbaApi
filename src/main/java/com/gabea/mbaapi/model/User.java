@@ -11,6 +11,7 @@ import com.gabea.mbaapi.model.enums.SituationEnum;
 import com.gabea.mbaapi.model.enums.UserTypeEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,20 +29,28 @@ public class User {
     private Integer id;
 
     @Column(name = "name")
+    @NotNull
     private String name;
     @Column(name = "email")
+    @NotNull
     private String email;
     @Column(name = "password")
+    @NotNull
     private String password;
     @Column(name = "instrument")
+    @NotNull
     private InstrumentEnum instrument;
     @Column(name = "user_type")
+    @NotNull
     private UserTypeEnum userType;
     @Column(name = "situation")
+    @NotNull
     private SituationEnum situation;
     @Column(name = "is_active")
+    @NotNull
     private boolean isActive;
     @Column(name = "is_associated")
+    @NotNull
     private boolean isAssociated;
 
     @Column(name = "created_at")

@@ -7,6 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class NoUsersFoundException extends ResponseStatusException {
 
     public NoUsersFoundException(String message){
-        super(HttpStatus.NO_CONTENT, message);
+        super(HttpStatus.NOT_FOUND, message);
     }
 }
