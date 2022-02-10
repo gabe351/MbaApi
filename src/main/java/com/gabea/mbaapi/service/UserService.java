@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +32,13 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        if (user.getCreatedAt() == null){
+            user.setCreatedAt(Instant.now());
+        }
         return userRepository.save(user);
     }
 
-    public User updateUser(User user) {
+    public Optional<User> updateUser(User user) {
         Optional<User> originalUserOptional =  userRepository.findById(user.getId());
         if (originalUserOptional.isPresent()) {
             User originalUser = originalUserOptional.get();
@@ -45,12 +50,14 @@ public class UserService {
             originalUser.setEmail(user.getEmail());
             originalUser.setPassword(user.getPassword());
             originalUser.setCreatedAt(user.getCreatedAt());
-            originalUser.setUpdatedAt(user.getUpdatedAt());
+            originalUser.setUpdatedAt(Instant.now());
             originalUser.setSituation(user.getSituation());
 
-            return userRepository.save(originalUser);
+            userRepository.save(originalUser);
+
+            return Optional.of(originalUser);
         } else {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Bad request");
+            return Optional.empty();
         }
     }
 
